@@ -19,23 +19,28 @@ class Customer {
         double total = 0;
         int renterPoints = 0;
         
+        //Add Header
         String result = String.format("Rental Record for %s\n", this.name);
         result += "\tTitle\t\tDays\tAmount\n";
 
+        //Add content
         for (Rental rental : rentals) {
-            double thisAmount = 0;
-            //determine amounts for each line
-            thisAmount = rental.getRentalPrice();
-            // add frequent renter points
-            renterPoints ++;
-            // add bonus for a two day new release rental
-            if ((rental.getMovie().getPriceCode() == PriceCode.NEW_RELEASE) && rental.getDaysRented() > 1)
+            double price = rental.getRentalPrice();
+            total += price;
+            
+            //Add rental description
+            String title = rental.getMovie().getTitle();
+            int rented = rental.getDaysRented();
+            result += String.format("\t%s\t\t%s\t%s\n", title, rented, price);
+            
+            //Handle renter points
+            renterPoints++;
+            if (rented > 1 && rental.getMovie().getPriceCode() == PriceCode.NEW_RELEASE) {
                 renterPoints++;
-            //show figures for this rental
-            result += String.format("\t%s\t\t%s\t%s\n", rental.getMovie().getTitle(), rental.getDaysRented(), String.valueOf(thisAmount));
-            total += thisAmount;
+            }
         }
-        //add footer lines
+        
+        //Add footer
         result += String.format("Amount owed is %s\n", total);
         result += String.format("You earned %s frequent renter points", renterPoints);
         return result;
