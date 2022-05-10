@@ -18,7 +18,7 @@ public class CustomerTest {
                            "\tSecond Movie\t\t5\t4.5\n" +
                            "Amount owed is 34.5\n" +
                            "You earned 3 frequent renter points";
-        assertEquals(customer.statement(), reference);
+        assertEquals(customer.getStatement(), reference);
     }
     
 }
