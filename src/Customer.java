@@ -20,8 +20,9 @@ class Customer {
         int renterPoints = 0;
         
         //Add Header
-        String result = String.format("Rental Record for %s\n", this.name);
-        result += "\tTitle\t\tDays\tAmount\n";
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("Rental Record for %s\n", this.name));
+        builder.append("\tTitle\t\tDays\tAmount\n");
 
         //Add content
         for (Rental rental : rentals) {
@@ -31,7 +32,7 @@ class Customer {
             //Add rental description
             String title = rental.getMovie().getTitle();
             int rented = rental.getDaysRented();
-            result += String.format("\t%s\t\t%s\t%s\n", title, rented, price);
+            builder.append(String.format("\t%s\t\t%s\t%s\n", title, rented, price));
             
             //Handle renter points
             renterPoints++;
@@ -41,9 +42,9 @@ class Customer {
         }
         
         //Add footer
-        result += String.format("Amount owed is %s\n", total);
-        result += String.format("You earned %s frequent renter points", renterPoints);
-        return result;
+        builder.append(String.format("Amount owed is %s\n", total));
+        builder.append(String.format("You earned %s frequent renter points", renterPoints));
+        return builder.toString();
     }
 
 }
